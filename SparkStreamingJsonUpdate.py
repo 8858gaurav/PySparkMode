@@ -58,6 +58,28 @@ spark.sql(""" SELECT order_id,
     city,
     state,
     pincode,
+    lines.order_item_id,
+    lines.order_item_product_id,
+    lines.order_item_quantity,
+    lines.order_item_product_price,
+    lines.order_item_subtotal,
+    explode(line_items) lines from orders""").show(10, truncate= False)
+# +--------+-----------+--------------+--------------+-------+-----+-------+-------------+---------------------+-------------------+------------------------+-------------------+----------------------------+
+# |order_id|customer_id|customer_fname|customer_lname|city   |state|pincode|order_item_id|order_item_product_id|order_item_quantity|order_item_product_price|order_item_subtotal|lines                       |
+# +--------+-----------+--------------+--------------+-------+-----+-------+-------------+---------------------+-------------------+------------------------+-------------------+----------------------------+
+# |1       |11599      |Mary          |Malone        |Hickory|NC   |28601  |1            |957                  |1                  |299.98                  |299.98             |{1, 957, 1, 299.98, 299.98} |
+# |2       |256        |David         |Rodriguez     |Chicago|IL   |60625  |2            |1073                 |1                  |199.99                  |199.99             |{2, 1073, 1, 199.99, 199.99}|
+# |2       |256        |David         |Rodriguez     |Chicago|IL   |60625  |3            |502                  |5                  |50.0                    |250.0              |{3, 502, 5, 50.0, 250.0}    |
+# |2       |256        |David         |Rodriguez     |Chicago|IL   |60625  |4            |403                  |1                  |129.99                  |129.99             |{4, 403, 1, 129.99, 129.99} |
+# +--------+-----------+--------------+--------------+-------+-----+-------+-------------+---------------------+-------------------+------------------------+-------------------+----------------------------+
+
+spark.sql(""" SELECT order_id,
+    customer_id,
+    customer_fname,
+    customer_lname,
+    city,
+    state,
+    pincode,
     item.order_item_id,
     item.order_item_product_id,
     item.order_item_quantity,
