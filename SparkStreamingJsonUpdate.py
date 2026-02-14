@@ -1,4 +1,8 @@
 # run this file in databricks, Update mode works with csv format also.
+# update mode will not work, when we run this code on our local mac machine
+# pyspark.errors.exceptions.captured.AnalysisException: [STREAMING_OUTPUT_MODE.UNSUPPORTED_DATASOURCE] Invalid streaming output mode: update. This output mode is not supported in Data Source csv. SQLSTATE: 42KDE
+# when we run with complet mode, this will not work
+# pyspark.errors.exceptions.captured.AnalysisException: [STREAMING_OUTPUT_MODE.UNSUPPORTED_DATASOURCE] Invalid streaming output mode: complete. This output mode is not supported in Data Source csv. SQLSTATE: 42KDE
 
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import *
