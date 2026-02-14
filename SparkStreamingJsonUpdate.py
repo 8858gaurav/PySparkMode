@@ -23,6 +23,7 @@ orders_df = spark \
 
 orders_df.createOrReplaceTempView("orders")
 
+spark.sql("select * from orders Limit 10").show(10, truncate= False)
 # +--------+-----------+--------------+--------------+-------+-----+-------+-------------------------------------------------------------------------------------+
 # |order_id|customer_id|customer_fname|customer_lname|city   |state|pincode|line_items                                                                           |
 # +--------+-----------+--------------+--------------+-------+-----+-------+-------------------------------------------------------------------------------------+
