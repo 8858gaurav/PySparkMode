@@ -23,6 +23,8 @@ orders_df = spark \
 
 orders_df.createOrReplaceTempView("orders")
 
+########## don't use this in streaming process #################
+
 spark.sql("select * from orders Limit 10").show(10, truncate= False)
 # +--------+-----------+--------------+--------------+-------+-----+-------+-------------------------------------------------------------------------------------+
 # |order_id|customer_id|customer_fname|customer_lname|city   |state|pincode|line_items                                                                           |
@@ -30,9 +32,6 @@ spark.sql("select * from orders Limit 10").show(10, truncate= False)
 # |1       |11599      |Mary          |Malone        |Hickory|NC   |28601  |[{1, 957, 1, 299.98, 299.98}]                                                        |
 # |2       |256        |David         |Rodriguez     |Chicago|IL   |60625  |[{2, 1073, 1, 199.99, 199.99}, {3, 502, 5, 50.0, 250.0}, {4, 403, 1, 129.99, 129.99}]|
 # +--------+-----------+--------------+--------------+-------+-----+-------+-------------------------------------------------------------------------------------+
-
-exploded_orders = spark.sql("""select order_id,customer_id,city,state,
-pincode,explode(line_items) lines from orders""")
 
 spark.sql(""" SELECT order_id,
     customer_id,
@@ -96,6 +95,11 @@ LATERAL VIEW EXPLODE(line_items) AS item""").show(10, truncate= False)
 # |2       |256        |David         |Rodriguez     |Chicago|IL   |60625  |3            |502                  |5                  |250.0              |50.0                    |
 # |2       |256        |David         |Rodriguez     |Chicago|IL   |60625  |4            |403                  |1                  |129.99             |129.99                  |
 # +--------+-----------+--------------+--------------+-------+-----+-------+-------------+---------------------+-------------------+-------------------+------------------------+
+
+########## don't use this part in streaming process #################
+
+exploded_orders = spark.sql("""select order_id,customer_id,city,state,
+pincode,explode(line_items) lines from orders""")
 
 exploded_orders.createOrReplaceTempView("exploded_orders")
 
