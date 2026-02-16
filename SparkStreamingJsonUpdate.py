@@ -1,8 +1,10 @@
 # run this file in databricks, Update mode works with csv format also.
-# update mode will not work, when we run this code on our local mac machine
-# pyspark.errors.exceptions.captured.AnalysisException: [STREAMING_OUTPUT_MODE.UNSUPPORTED_DATASOURCE] Invalid streaming output mode: update. This output mode is not supported in Data Source csv. SQLSTATE: 42KDE
-# when we run with complet mode, this will not work
+
+# when we run with complete mode, this will not work
 # pyspark.errors.exceptions.captured.AnalysisException: [STREAMING_OUTPUT_MODE.UNSUPPORTED_DATASOURCE] Invalid streaming output mode: complete. This output mode is not supported in Data Source csv. SQLSTATE: 42KDE
+# In Complete Mode, the entire Result Table is rewritten to the external storage every time there is a trigger.
+
+# It is much more efficient than Complete Mode because it doesn't rewrite the entire state—only the keys that actually shifted.
 # json/parquet will also not work, if we use update mode on our local mac machine
 # pyspark.errors.exceptions.captured.AnalysisException: [STREAMING_OUTPUT_MODE.UNSUPPORTED_DATASOURCE] Invalid streaming output mode: update. This output mode is not supported in Data Source parquet. SQLSTATE: 42KDE
 # pyspark.errors.exceptions.captured.AnalysisException: [STREAMING_OUTPUT_MODE.UNSUPPORTED_DATASOURCE] Invalid streaming output mode: update. This output mode is not supported in Data Source json. SQLSTATE: 42KDE
